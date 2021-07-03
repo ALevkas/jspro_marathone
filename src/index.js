@@ -113,11 +113,91 @@ const changePosition = () => {
   }
 };
 
+const drawGross = () => {
+  ctx.fillStyle = '#257a10';
+  ctx.fillRect(0, 0, 600, 600);
+};
+
+const drawRoad = () => {
+  ctx.fillStyle = '#ab790c';
+  ctx.fillRect(0, 20, 600, 100);
+  ctx.fillRect(200, 100, 200, 600);
+
+  ctx.strokeStyle = '#89857D';
+  ctx.lineWidth = 5;
+
+  ctx.beginPath();
+  ctx.moveTo(0, 20);
+  ctx.lineTo(600, 20);
+
+  ctx.moveTo(0, 120);
+  ctx.lineTo(200, 120);
+
+  ctx.moveTo(200, 120);
+  ctx.lineTo(200, 600);
+
+  ctx.moveTo(400, 120);
+  ctx.lineTo(600, 120);
+
+  ctx.moveTo(400, 120);
+  ctx.lineTo(400, 600);
+
+  ctx.stroke();
+};
+
+const renderTree = (startX, startY) => {
+  ctx.fillStyle = '#5E4107';
+  ctx.fillRect(startX, startY, 15, 75);
+
+  ctx.beginPath();
+  ctx.fillStyle = '#032C06';
+  ctx.lineWidth = 5;
+
+  ctx.moveTo(startX, startY + 25);
+  ctx.quadraticCurveTo(startX - 50, startY + 15, startX - 20, startY);
+  ctx.quadraticCurveTo(startX - 50, startY - 25, startX + 7, startY - 25);
+  ctx.quadraticCurveTo(startX + 50, startY - 25, startX + 35, startY);
+  ctx.quadraticCurveTo(startX + 50, startY + 15, startX + 15, startY + 25);
+
+  ctx.fill();
+};
+
+const drawTree = () => {
+  renderTree(150, 150);
+  renderTree(450, 150);
+  renderTree(150, 300);
+  renderTree(450, 300);
+  renderTree(150, 450);
+  renderTree(450, 450);
+  renderTree(75, 225);
+  renderTree(75, 225 + 150);
+  renderTree(525, 225);
+  renderTree(525, 225 + 150);
+};
+
+const drawBorderWater = () => {
+  ctx.fillStyle = '#49D2DF';
+  ctx.fillRect(0, 0, 600, 5);
+  ctx.fillRect(0, 0, 5, 600);
+  ctx.fillRect(0, 595, 600, 5);
+  ctx.fillRect(595, 0, 595, 600);
+};
+
+const drawBackground = () => {
+  drawGross();
+  drawBorderWater();
+  drawRoad();
+  drawTree();
+};
+
 img.addEventListener('load', () => {
   setInterval(() => {
     changePosition();
 
     ctx.clearRect(0, 0, 600, 600);
+
+    drawBackground();
+
     ctx.drawImage(img, cycle * spriteW, direction, spriteW, spriteH, pX, pY, 48, 48);
   }, 20);
 });
