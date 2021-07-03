@@ -199,5 +199,5 @@ img.addEventListener('load', () => {
     drawBackground();
 
     ctx.drawImage(img, cycle * spriteW, direction, spriteW, spriteH, pX, pY, 48, 48);
-  }, 20);
+  }, 120);
 });
