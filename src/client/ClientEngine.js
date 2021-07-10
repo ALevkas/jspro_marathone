@@ -34,17 +34,17 @@ class ClientEngine {
   loadSprites(spriteGroup) {
     this.imageLoaders = [];
 
-    for (const groupName in spriteGroup) {
+    spriteGroup((groupName) => {
       const group = spriteGroup[groupName];
       this.sprites[groupName] = group;
 
-      for (const spriteName in group) {
+      group.forEach((spriteName) => {
         const { img } = group[spriteName];
         if (!this.images[img]) {
           this.imageLoaders.push(this.loadImage(img));
         }
-      }
-    }
+      });
+    });
 
     return Promise.all(this.imageLoaders);
   }
@@ -58,7 +58,14 @@ class ClientEngine {
     });
   }
 
-  renderSpriteFrame({ sprite, frame, x, y, w, h }) {
+  renderSpriteFrame({
+    sprite,
+    frame,
+    x,
+    y,
+    w,
+    h,
+  }) {
     const spriteCfg = this.sprites[sprite[0]][sprite[1]];
 
     const [fx, fy, fw, fh] = spriteCfg.frames[frame];

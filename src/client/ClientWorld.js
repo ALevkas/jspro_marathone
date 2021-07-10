@@ -11,8 +11,8 @@ class ClientWorld {
 
   init() {
     this.levelCfg.map.forEach((cfgRow, pY) => {
-      cfgRow.map((cfgCell, pX) => {
-        return this.engine.renderSpriteFrame({
+      cfgRow.forEach((cfgCell, pX) => {
+        this.engine.renderSpriteFrame({
           sprite: ['terrain', cfgCell[0]],
           frame: 0,
           x: pX,

@@ -25,6 +25,7 @@ class ClientGame {
 
   initEngine() {
     this.engine.loadSprites(sprites).then(() => {
+      // eslint-disable-next-line no-unused-vars
       this.engine.on('render', (_, time) => {
         this.world.init();
       });
