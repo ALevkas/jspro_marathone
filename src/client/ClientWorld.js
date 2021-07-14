@@ -15,8 +15,8 @@ class ClientWorld extends PositionedObject {
       levelCfg,
       height: worldHeight * cellSize,
       width: worldWidth * cellSize,
-      worldWidth,
       worldHeight,
+      worldWidth,
       cellWidth: cellSize,
       cellHeight: cellSize,
       map: [],
@@ -26,8 +26,8 @@ class ClientWorld extends PositionedObject {
   init() {
     const { levelCfg, map, worldWidth, worldHeight } = this;
 
-    for (let row = 0; row < worldHeight; row++) {
-      for (let col = 0; col < worldWidth; col++) {
+    for (let row = 0; row < worldHeight; row += 1) {
+      for (let col = 0; col < worldWidth; col += 1) {
         if (!map[row]) {
           map[row] = [];
         }
@@ -45,9 +45,9 @@ class ClientWorld extends PositionedObject {
   render(time) {
     const { map, worldWidth, worldHeight } = this;
 
-    for (let row = 0; row < worldHeight; row++) {
-      for (let col = 0; row < worldWidth; col++) {
-        map[row][col].render(time);
+    for (let row = 0; row < worldHeight; row += 1) {
+      for (let col = 0; col < worldWidth; col += 1) {
+        map[col][row].render(time);
       }
     }
   }

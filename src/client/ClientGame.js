@@ -10,11 +10,16 @@ class ClientGame {
     Object.assign(this, {
       cfg,
       gameObjects,
+      player: null,
     });
 
     this.engine = this.createEngine();
     this.world = this.createWorld();
     this.initEngine();
+  }
+
+  setPlayer(player) {
+    this.player = player;
   }
 
   createEngine() {
@@ -28,10 +33,36 @@ class ClientGame {
   initEngine() {
     this.engine.loadSprites(sprites).then(() => {
       this.world.init();
+
       this.engine.on('render', (_, time) => {
         this.world.render(time);
       });
+
       this.engine.start();
+      this.initKeys();
+    });
+  }
+
+  initKeys() {
+    const movePlayer = (keydown, x, y) => {
+      if (keydown) {
+        this.player.moveByCellCoord(x, y, (cell) => cell.findObjectsByType('grass').length);
+      }
+    };
+
+    this.engine.input.onKey({
+      ArrowLeft: (keydown) => {
+        movePlayer(keydown, -1, 0);
+      },
+      ArrowRight: (keydown) => {
+        movePlayer(keydown, 1, 0);
+      },
+      ArrowUp: (keydown) => {
+        movePlayer(keydown, 0, -1);
+      },
+      ArrowDown: (keydown) => {
+        movePlayer(keydown, 0, 1);
+      },
     });
   }
 
