@@ -177,7 +177,7 @@
             ],
             [
                 [
-                    "grass"
+                    "grass",  {"type": "boy1", "player": true}
                 ]
             ],
             [
