@@ -168,7 +168,7 @@
         [
           {
             "type": "boy1",
-            "player": true
+            "class": "player"
           }
         ]
       ],

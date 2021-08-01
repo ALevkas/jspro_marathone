@@ -20,9 +20,11 @@ class ClientGame {
 
   setPlayer(player) {
     this.player = player;
+    this.player.playerName = this.cfg.playerName;
   }
 
   createEngine() {
+    debugger;
     return new ClientEngine(document.getElementById(this.cfg.tagId), this);
   }
 
