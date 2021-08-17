@@ -24,7 +24,6 @@ class ClientGame {
   }
 
   createEngine() {
-    debugger;
     return new ClientEngine(document.getElementById(this.cfg.tagId), this);
   }
 
