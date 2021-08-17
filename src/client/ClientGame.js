@@ -20,14 +20,20 @@ class ClientGame {
 
   setPlayer(player) {
     this.player = player;
+    this.player.playerName = this.cfg.playerName;
   }
 
   createEngine() {
-    return new ClientEngine(document.getElementById(this.cfg.tagId));
+    debugger;
+    return new ClientEngine(document.getElementById(this.cfg.tagId), this);
   }
 
   createWorld() {
     return new ClientWorld(this, this.engine, levelCfg);
+  }
+
+  getWorld() {
+    return this.world;
   }
 
   initEngine() {
@@ -35,6 +41,7 @@ class ClientGame {
       this.world.init();
 
       this.engine.on('render', (_, time) => {
+        this.engine.camera.focusAtGameObject(this.player);
         this.world.render(time);
       });
 
@@ -45,23 +52,28 @@ class ClientGame {
 
   initKeys() {
     const movePlayer = (keydown, x, y) => {
-      if (keydown) {
-        this.player.moveByCellCoord(x, y, (cell) => cell.findObjectsByType('grass').length);
+      if (this.player && this.player.motionProgress === 1) {
+        const canMovie = this.player.moveByCellCoord(x, y, (cell) => cell.findObjectsByType('grass').length);
+
+        if (canMovie) {
+          this.player.setState(keydown);
+          this.player.once('motion-stopped', () => this.player.setState('main'));
+        }
       }
     };
 
     this.engine.input.onKey({
-      ArrowLeft: (keydown) => {
-        movePlayer(keydown, -1, 0);
+      ArrowLeft: () => {
+        movePlayer('left', -1, 0);
       },
-      ArrowRight: (keydown) => {
-        movePlayer(keydown, 1, 0);
+      ArrowRight: () => {
+        movePlayer('right', 1, 0);
       },
-      ArrowUp: (keydown) => {
-        movePlayer(keydown, 0, -1);
+      ArrowUp: () => {
+        movePlayer('up', 0, -1);
       },
-      ArrowDown: (keydown) => {
-        movePlayer(keydown, 0, 1);
+      ArrowDown: () => {
+        movePlayer('down', 0, 1);
       },
     });
   }
